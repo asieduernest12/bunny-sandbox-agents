@@ -1,0 +1,43 @@
+services:
+  bunny:
+    image: bunny
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    privileged: true
+    network_mode: bridge
+    working_dir: $PWD
+    entrypoint: ['/bin/sh', '-c']
+    command: [' echo "Bunny started: Dir: $PWD" && tail -f /dev/null;']
+    
+    volumes:
+      # Mount current directory as workspace
+      #- ./:/workspace
+      # Docker socket for nested container operations
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Opencode data persistence
+      - ~/.local/share/opencode:/root/.local/share/opencode
+      - ~/.gemini:/root/.gemini
+        ~/.kilocode/:/root/.kilocode/
+      # Local aliases file (fixed path typo from original)
+      - /etc/profile.d/aliases.sh:/etc/profile.d/aliases.sh
+      - $HOME/Desktop/workshop/:/$HOME/Desktop/workshop/
+      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+      - $HOME/.docker:/root/.docker:ro
+      - ./openclaw:/root/.openclaw   
+    environment:
+      - TERM=xterm-256color
+      - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+      - HOSTNAME=bunny
+    
+    # Keep container running
+    restart: unless-stopped
+    
+    # Health check to ensure container is ready
+    healthcheck:
+      test: ["CMD", "test", "-d", "/etc/profile.d/aliases.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
