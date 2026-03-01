@@ -16,16 +16,17 @@ services:
       #- ./:/workspace
       # Docker socket for nested container operations
       - /var/run/docker.sock:/var/run/docker.sock
+      - $HOME/.docker:/root/.docker:ro
+      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK:ro
+      - $HOME/.gitconfig:/root/.gitconfig:ro
       # Opencode data persistence
       - ~/.local/share/opencode:/root/.local/share/opencode
       - ~/.gemini:/root/.gemini
         ~/.kilocode/:/root/.kilocode/
-      # Local aliases file (fixed path typo from original)
-      - /etc/profile.d/aliases.sh:/etc/profile.d/aliases.sh
-      - $HOME/Desktop/workshop/:/$HOME/Desktop/workshop/
-      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
-      - $HOME/.docker:/root/.docker:ro
       - ./openclaw:/root/.openclaw   
+      # Local aliases file (fixed path typo from original)
+      - $HOME/Desktop/workshop/:/$HOME/Desktop/workshop/
+      - /etc/profile.d/aliases.sh:/etc/profile.d/aliases.sh
     environment:
       - TERM=xterm-256color
       - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
