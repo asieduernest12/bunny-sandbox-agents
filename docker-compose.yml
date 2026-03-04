@@ -18,7 +18,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker:/root/.docker:ro
       - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK:ro
-      - $HOME/.gitconfig:/root/.gitconfig:ro
+      - $HOME/.gitconfig:/root/.gitconfig
       # Opencode data persistence
       - ~/.local/share/opencode:/root/.local/share/opencode
       - ~/.gemini:/root/.gemini
