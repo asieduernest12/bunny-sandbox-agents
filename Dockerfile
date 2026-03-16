@@ -1,8 +1,8 @@
 FROM oven/bun:slim
 
-RUN apt update;apt upgrade; 
-RUN apt install -yf make tree nano curl unzip docker-cli docker-compose bash git 
-RUN bun i -g openclaw opencode-ai @kilocode/cli @google/gemini-cli
+RUN apt update;apt upgrade -yf; 
+RUN apt install -yf  make tmux tree nano curl unzip docker-cli docker-compose bash git starship procps
+RUN bun i -g openclaw opencode-ai @kilocode/cli @google/gemini-cli @anthropic-ai/claude-code @musistudio/claude-code-router
 
 ENV FNM_DIR=/opt/fnm
 
